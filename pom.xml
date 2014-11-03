@@ -2,11 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.springframework</groupId>
-    <artifactId>gs-maven</artifactId>
+    <groupId>com.dnsdojo.swellergis</groupId>
+    <artifactId>geoicon</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
     
+    <properties>
+        <jdk.version>1.6</jdk.version>
+    </properties>
+
     <!-- tag::joda[] -->
     <dependencies>
         <dependency>
@@ -18,6 +22,7 @@
     <!-- end::joda[] -->
 
     <build>
+		<finalName>geoicon</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -30,6 +35,8 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+							<source>${jdk.version}</source>
+							<target>${jdk.version}</target>
                             <transformers>
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
