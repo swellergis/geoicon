@@ -2,7 +2,7 @@ package main.java.hello;
 
 public class Greeter {
     public String sayHello() {
-            return "Howdy! Mighty fine!";
+            return "Howdy!";
     }
 }
 
