@@ -1,27 +1,22 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!doctype html>
 <html>
 <head>
-<title>howdy</title>
+<title>geoicon</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css"/>
-<script type="text/javascript" src="resources/js/jquery-1.7.min.js"></script>
-<script type="text/javascript" src="resources/js/main.js"></script>
-<script type="text/javascript">
-// Initialize some stuff for this page as soon as it's done loading.
-$(document).ready(function($) {
-	$('#msg').html('populated by jQuery');
-});
-</script>
+<link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 </head>
 <body>
 
-<h3>Message : ${message}</h3>
-<h3>Counter : ${counter}</h3>
+<h3>${message}</h3>
 <br/>
 
-<div id="msg"></div>	
+<div><button id="btn_test1">test1</button></div>
 <br/>
-
-<div><button id="btn_run">run</button></div>
+<div><button id="btn_test2">test2</button></div>
 <br/>
 
 <div><iframe id="iframe_main" src=""></iframe></div>
