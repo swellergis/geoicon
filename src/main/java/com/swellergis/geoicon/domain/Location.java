@@ -7,22 +7,26 @@ package com.swellergis.geoicon.domain;
  *
  */
 public class Location {
-	// define default location at 0, 0, 0
+	// default coordinate value
 	private static final String DEF_COORDINATE = "0";
-	// minimum threshold for longitude (x)
+	// min/max thresholds for longitude (x)
 	protected static final int THRESHOLD_MIN_X = -180;
-	// minimum threshold for latitude (y)
+	protected static final int THRESHOLD_MAX_X = 180;
+	// min/max thresholds for latitude (y)
 	protected static final int THRESHOLD_MIN_Y = -90;
+	protected static final int THRESHOLD_MAX_Y = 90;
 	// minimum threshold for elevation (z)
 	protected static final int THRESHOLD_MIN_Z = -100;
-	private double x;
-	private double y;
-	private double z;
+	
+	private double x; // longitude
+	private double y; // latitude
+	private double z; // elevation
 	
 	/**
 	 * default constructor
 	 */
 	public Location() {
+		// define default location to be 0, 0, 0
 		this(DEF_COORDINATE, DEF_COORDINATE, DEF_COORDINATE);
 	}
 	/**
@@ -39,19 +43,17 @@ public class Location {
 		this.z = Double.parseDouble(z);
 	}
 
-	// verify client input for coordinate values are valid
+	// verify client input for coordinate values
 	private void verifyCoordinateInput(String sx, String sy, String sz) {
 		String errorMsg = null;
-		double dx = Double.parseDouble(sx);
-		if (dx < THRESHOLD_MIN_X) {
-			errorMsg = "Longitude (x) cannot be < " + THRESHOLD_MIN_X + ". Input value: " + sx;
+		double dx = Math.abs(Double.parseDouble(sx));
+		if (dx > THRESHOLD_MAX_X) {
+			errorMsg = "Longitude (x) cannot be < " + THRESHOLD_MIN_X + " or > " + THRESHOLD_MAX_X + ". Input value: " + sx;
 		}
-
-		double dy = Double.parseDouble(sy);
-		if (dy < THRESHOLD_MIN_Y) {
-			errorMsg = "Latitude (y) cannot be < " + THRESHOLD_MIN_Y + ". Input value: " + sy;
+		double dy = Math.abs(Double.parseDouble(sy));
+		if (dy > THRESHOLD_MAX_Y) {
+			errorMsg = "Latitude (y) cannot be < " + THRESHOLD_MIN_Y + " or > " + THRESHOLD_MAX_Y + ". Input value: " + sy;
 		}
-
 		double dz = Double.parseDouble(sz);
 		if (dz < THRESHOLD_MIN_Z) {
 			errorMsg = "Elevation (z) cannot be < " + THRESHOLD_MIN_Z + ". Input value: " + sz;
