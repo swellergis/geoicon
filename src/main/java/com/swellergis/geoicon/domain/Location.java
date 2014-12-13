@@ -22,12 +22,17 @@ public class Location {
 		this.y = Double.parseDouble(y);
 		this.z = Double.parseDouble(z);
 	}
-	
+
 	// verify client input for coordinate values are valid
 	private void verifyCoordinateInput(String sx, String sy, String sz) {
 		double dx = Double.parseDouble(sx);
 		if (dx < -180) {
 			throw new IllegalArgumentException("Longitude (x) cannot be < -180. Input value: " + sx);
+		}
+
+		double dy = Double.parseDouble(sy);
+		if (dy < -90) {
+			throw new IllegalArgumentException("Latitude (y) cannot be < -90. Input value: " + sy);
 		}
 	}
 
