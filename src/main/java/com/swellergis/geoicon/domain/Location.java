@@ -9,10 +9,12 @@ package com.swellergis.geoicon.domain;
 public class Location {
 	// define default location at 0, 0, 0
 	private static final String DEF_COORDINATE = "0";
-	private static final int THRESHOLD_MIN_X = -180;
-	private static final int THRESHOLD_MIN_Y = -90;
-	// limit minimum threshold for elevation to -100, for now...
-	private static final int THRESHOLD_MIN_Z = -100;
+	// minimum threshold for longitude (x)
+	protected static final int THRESHOLD_MIN_X = -180;
+	// minimum threshold for latitude (y)
+	protected static final int THRESHOLD_MIN_Y = -90;
+	// minimum threshold for elevation (z)
+	protected static final int THRESHOLD_MIN_Z = -100;
 	private double x;
 	private double y;
 	private double z;

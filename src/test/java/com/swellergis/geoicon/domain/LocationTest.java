@@ -17,7 +17,6 @@ public class LocationTest {
 	private double expectedX;
 	private double expectedY;
 	private double expectedZ;
-	private static final String THRESHOLD_MIN_Z = "-100";
 	
 	@Before
 	public void setup() {
@@ -41,22 +40,25 @@ public class LocationTest {
 		assertEquals(expectedZ, location.getZ());
 	}
 
-	// exceptional case: x coordinate value is below minimum threshold (-180.0)
+	// exceptional case: x coordinate value is below minimum threshold for longitude (-180.0)
 	@Test(expected = IllegalArgumentException.class)
 	public void failIfXCoordinateIsBelowMinimumThreshold() {
-		location = new Location("-180.0001", "0", "0");
+		String errorCoord = Location.THRESHOLD_MIN_X + ".0001";
+		location = new Location(errorCoord, "0", "0");
 	}
 
-	// exceptional case: y coordinate value is below minimum threshold (-90.0)
+	// exceptional case: y coordinate value is below minimum threshold for latitude (-90.0)
 	@Test(expected = IllegalArgumentException.class)
 	public void failIfYCoordinateIsBelowMinimumThreshold() {
-		location = new Location("0", "-90.0001", "0");
+		String errorCoord = Location.THRESHOLD_MIN_Y + ".0001";
+		location = new Location("0", errorCoord, "0");
 	}
 
-	// exceptional case: z coordinate value is below minimum elevation threshold
+	// exceptional case: z coordinate value is below minimum threshold for elevation
 	@Test(expected = IllegalArgumentException.class)
 	public void failIfZCoordinateIsBelowMinimumThreshold() {
-		location = new Location("0", "0", THRESHOLD_MIN_Z + ".0001");
+		String errorCoord = Location.THRESHOLD_MIN_Z + ".0001";
+		location = new Location("0", "0", errorCoord);
 	}
 
 }
