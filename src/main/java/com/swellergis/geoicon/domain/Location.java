@@ -7,16 +7,14 @@ package com.swellergis.geoicon.domain;
  *
  */
 public class Location {
-	private static final double DEF_COORDINATE = 0;
+	private static final String DEF_COORDINATE = "0";
 	private double x;
 	private double y;
 	private double z;
 	
 	// default constructor
 	public Location() {
-		this.x = DEF_COORDINATE;
-		this.y = DEF_COORDINATE;
-		this.z = DEF_COORDINATE;
+		this(DEF_COORDINATE, DEF_COORDINATE, DEF_COORDINATE);
 	}
 	public Location(String x, String y, String z) {
 		verifyCoordinateInput(x, y, z);
@@ -24,6 +22,7 @@ public class Location {
 		this.y = Double.parseDouble(y);
 		this.z = Double.parseDouble(z);
 	}
+	
 	// verify client input for coordinate values are valid
 	private void verifyCoordinateInput(String sx, String sy, String sz) {
 		double dx = Double.parseDouble(sx);
