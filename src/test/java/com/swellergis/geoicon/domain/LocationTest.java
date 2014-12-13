@@ -17,6 +17,7 @@ public class LocationTest {
 	private double expectedX;
 	private double expectedY;
 	private double expectedZ;
+	private static final String THRESHOLD_MIN_Z = "-100";
 	
 	@Before
 	public void setup() {
@@ -50,6 +51,12 @@ public class LocationTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void failIfYCoordinateIsBelowMinimumThreshold() {
 		location = new Location("0", "-90.0001", "0");
+	}
+
+	// exceptional case: z coordinate value is below minimum threshold
+	@Test(expected = IllegalArgumentException.class)
+	public void failIfZCoordinateIsBelowMinimumThreshold() {
+		location = new Location("0", "0", THRESHOLD_MIN_Z);
 	}
 
 }
