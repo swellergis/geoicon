@@ -7,6 +7,7 @@ package com.swellergis.geoicon.domain;
  *
  */
 public class Location {
+	// define default location at 0, 0, 0
 	private static final String DEF_COORDINATE = "0";
 	private static final int THRESHOLD_MIN_X = -180;
 	private static final int THRESHOLD_MIN_Y = -90;
@@ -38,19 +39,24 @@ public class Location {
 
 	// verify client input for coordinate values are valid
 	private void verifyCoordinateInput(String sx, String sy, String sz) {
+		String errorMsg = null;
 		double dx = Double.parseDouble(sx);
 		if (dx < THRESHOLD_MIN_X) {
-			throw new IllegalArgumentException("Longitude (x) cannot be < -180. Input value: " + sx);
+			errorMsg = "Longitude (x) cannot be < " + THRESHOLD_MIN_X + ". Input value: " + sx;
 		}
 
 		double dy = Double.parseDouble(sy);
 		if (dy < THRESHOLD_MIN_Y) {
-			throw new IllegalArgumentException("Latitude (y) cannot be < -90. Input value: " + sy);
+			errorMsg = "Latitude (y) cannot be < " + THRESHOLD_MIN_Y + ". Input value: " + sy;
 		}
 
 		double dz = Double.parseDouble(sz);
 		if (dz < THRESHOLD_MIN_Z) {
-			throw new IllegalArgumentException("Elevation (z) cannot be < " + THRESHOLD_MIN_Z + ". Input value: " + sz);
+			errorMsg = "Elevation (z) cannot be < " + THRESHOLD_MIN_Z + ". Input value: " + sz;
+		}
+
+		if (errorMsg != null) {
+			throw new IllegalArgumentException(errorMsg);
 		}
 	}
 
