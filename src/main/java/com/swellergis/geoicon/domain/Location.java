@@ -1,23 +1,29 @@
 package com.swellergis.geoicon.domain;
 
 /**
- * Class defining 3D location objects.
+ * Class defining unprojected (geographic) 3D location objects.
  * 
  * @author Shaun
  *
  */
 public class Location {
+	private static final double DEF_COORDINATE = 0;
 	private double x;
 	private double y;
 	private double z;
 	
 	// default constructor
 	public Location() {
-		this.x = Double.parseDouble("0.0");
-		this.y = Double.parseDouble("0.0");
-		this.z = Double.parseDouble("0.0");
+		this.x = DEF_COORDINATE;
+		this.y = DEF_COORDINATE;
+		this.z = DEF_COORDINATE;
 	}
-	
+	public Location(String x, String y, String z) {
+		this.x = Double.parseDouble(x);
+		this.y = Double.parseDouble(y);
+		this.z = Double.parseDouble(z);
+	}
+
 	// longitude
 	public double getX() {
 		return x;

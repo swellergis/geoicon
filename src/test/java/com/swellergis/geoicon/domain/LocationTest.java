@@ -2,11 +2,12 @@ package com.swellergis.geoicon.domain;
 
 import static junit.framework.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test class for 3D location objects.
+ * Test class for 3D Location objects.
  * 
  * @author Shaun
  *
@@ -20,6 +21,10 @@ public class LocationTest {
 	@Before
 	public void setup() {
 		location = new Location();
+	}
+	@After
+	public void teardown() {
+		location = null;
 	}
 	
 	// case: coordinate values defined as '0.0' yields a Location object with numeric
@@ -35,4 +40,9 @@ public class LocationTest {
 		assertEquals(expectedZ, location.getZ());
 	}
 
+	// case: x coordinate is below minimum threshold for longitude (-180.0)
+	@Test(expected = IllegalArgumentException.class)
+	public void failIfXCoordinateIsLessThanMinimumThreshold() {
+		location = new Location("-180.0001", "0", "0");
+	}
 }
