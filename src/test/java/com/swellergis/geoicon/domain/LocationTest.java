@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Class defining 3D location objects.
+ * Test class for 3D location objects.
  * 
  * @author Shaun
  *
