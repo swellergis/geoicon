@@ -40,9 +40,16 @@ public class LocationTest {
 		assertEquals(expectedZ, location.getZ());
 	}
 
-	// case: x coordinate is below minimum threshold for longitude (-180.0)
+	// exceptional case: x coordinate value is below minimum threshold (-180.0)
 	@Test(expected = IllegalArgumentException.class)
-	public void failIfXCoordinateIsLessThanMinimumThreshold() {
+	public void failIfXCoordinateIsBelowMinimumThreshold() {
 		location = new Location("-180.0001", "0", "0");
 	}
+
+	// exceptional case: y coordinate value is below minimum threshold (-90.0)
+	@Test(expected = IllegalArgumentException.class)
+	public void failIfYCoordinateIsBelowMinimumThreshold() {
+		location = new Location("0", "-90.0001", "0");
+	}
+
 }
