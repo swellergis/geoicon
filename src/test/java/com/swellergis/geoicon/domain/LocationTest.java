@@ -53,10 +53,10 @@ public class LocationTest {
 		location = new Location("0", "-90.0001", "0");
 	}
 
-	// exceptional case: z coordinate value is below minimum threshold
+	// exceptional case: z coordinate value is below minimum elevation threshold
 	@Test(expected = IllegalArgumentException.class)
 	public void failIfZCoordinateIsBelowMinimumThreshold() {
-		location = new Location("0", "0", THRESHOLD_MIN_Z);
+		location = new Location("0", "0", THRESHOLD_MIN_Z + ".0001");
 	}
 
 }

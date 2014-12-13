@@ -10,6 +10,8 @@ public class Location {
 	private static final String DEF_COORDINATE = "0";
 	private static final int THRESHOLD_MIN_X = -180;
 	private static final int THRESHOLD_MIN_Y = -90;
+	// limit minimum threshold for elevation to -100, for now...
+	private static final int THRESHOLD_MIN_Z = -100;
 	private double x;
 	private double y;
 	private double z;
@@ -44,6 +46,11 @@ public class Location {
 		double dy = Double.parseDouble(sy);
 		if (dy < THRESHOLD_MIN_Y) {
 			throw new IllegalArgumentException("Latitude (y) cannot be < -90. Input value: " + sy);
+		}
+
+		double dz = Double.parseDouble(sz);
+		if (dz < THRESHOLD_MIN_Z) {
+			throw new IllegalArgumentException("Elevation (z) cannot be < " + THRESHOLD_MIN_Z + ". Input value: " + sz);
 		}
 	}
 
