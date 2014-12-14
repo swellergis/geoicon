@@ -41,27 +41,43 @@ public class Location {
 	 */
 	public Location(String x, String y, String z) {
 		verifyCoordinateInput(x, y, z);
-		this.x = Double.parseDouble(x);
-		this.y = Double.parseDouble(y);
-		this.z = Double.parseDouble(z);
 	}
 
 	// verify client input for coordinate values
 	private void verifyCoordinateInput(String sx, String sy, String sz) {
 		String errorMsg = null;
+		String locationName = "";
+		double dx;
+		double dy;
+		double dz;
+		
+		// attempt to parse input coordinate string values into numeric types
+		try {
+			dx = Math.abs(Double.parseDouble(sx));
+			dy = Math.abs(Double.parseDouble(sy));
+			dz = Double.parseDouble(sz);
+		} catch(NumberFormatException e) {
+			double defaultCoordinate = Double.parseDouble(DEF_COORDINATE);
+			dx = defaultCoordinate;
+			dy = defaultCoordinate;
+			dz = defaultCoordinate;
+			locationName = ERROR_NAME;
+		}
+		
+		this.x = dx;
+		this.y = dy;
+		this.z = dz;
+		this.name = locationName;
 
 		// verify input for longitude is within the defined threshold range
-		double dx = Math.abs(Double.parseDouble(sx));
 		if (dx > THRESHOLD_MAX_X) {
 			errorMsg = "Longitude (x) cannot be < " + THRESHOLD_MIN_X + " or > " + THRESHOLD_MAX_X + ". Input value: " + sx;
 		}
 		// verify input for latitude is within the defined threshold range
-		double dy = Math.abs(Double.parseDouble(sy));
 		if (dy > THRESHOLD_MAX_Y) {
 			errorMsg = "Latitude (y) cannot be < " + THRESHOLD_MIN_Y + " or > " + THRESHOLD_MAX_Y + ". Input value: " + sy;
 		}
 		// verify input for elevation is below the defined minimum threshold
-		double dz = Double.parseDouble(sz);
 		if (dz < THRESHOLD_MIN_Z) {
 			errorMsg = "Elevation (z) cannot be < " + THRESHOLD_MIN_Z + ". Input value: " + sz;
 		}
