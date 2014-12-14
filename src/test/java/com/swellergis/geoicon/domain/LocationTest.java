@@ -17,6 +17,7 @@ public class LocationTest {
 	private double expectedX;
 	private double expectedY;
 	private double expectedZ;
+	private String expectedName;
 	private String coordValid;
 	private String coordError;
 
@@ -42,45 +43,62 @@ public class LocationTest {
 		assertEquals(expectedZ, location.getZ());
 	}
 
-	// exceptional case: x coordinate value is outside valid range for longitude (-180 to 180)
-	@Test(expected = IllegalArgumentException.class)
-	public void failIfXCoordinateIsOutsideValidThresholdRange() {
+	// case: x coordinate value is outside valid range for longitude (-180 to 180)
+	@Test
+	public void locationNameShowsErrorfXCoordinateIsOutsideValidThresholdRange() {
+		expectedName = Location.ERROR_NAME;
 		coordValid = "0";
+		
 		// x coordinate value is below minimum threshold for longitude (-180.0)
 		coordError = Location.THRESHOLD_MIN_X + ".0001";
 		location = new Location(coordError, coordValid, coordValid);
+		assertEquals(expectedName, location.getName());
 		// x coordinate value is above max threshold for longitude (180.0)
 		coordError = Location.THRESHOLD_MAX_X + ".0001";
 		location = new Location(coordError, coordValid, coordValid);
+		assertEquals(expectedName, location.getName());
 	}
 
-	// exceptional case: y coordinate value is outside valid range for latitude (-90 to 90)
-	@Test(expected = IllegalArgumentException.class)
-	public void failIfYCoordinateIsOutsideValidThresholdRange() {
+	// case: y coordinate value is outside valid range for latitude (-90 to 90)
+	@Test
+	public void locationNameShowsErrorIfYCoordinateIsOutsideValidThresholdRange() {
+		expectedName = Location.ERROR_NAME;
 		coordValid = "0";
+		
 		// y coordinate value is below minimum threshold for latitude (-90.0)
 		coordError = Location.THRESHOLD_MIN_Y + ".0001";
 		location = new Location(coordValid, coordError, coordValid);
+		assertEquals(expectedName, location.getName());
 		// y coordinate value is above max threshold for latitude (90.0)
 		coordError = Location.THRESHOLD_MAX_Y + ".0001";
 		location = new Location(coordValid, coordError, coordValid);
+		assertEquals(expectedName, location.getName());
 	}
 
-	// exceptional case: z coordinate value is below minimum threshold for elevation
-	@Test(expected = IllegalArgumentException.class)
-	public void failIfZCoordinateIsBelowMinimumThreshold() {
+	// case: z coordinate value is below minimum threshold for elevation
+	@Test
+	public void locationNameShowsErrorIfZCoordinateIsBelowMinimumThreshold() {
+		expectedName = Location.ERROR_NAME;
 		coordValid = "0";
+
 		coordError = Location.THRESHOLD_MIN_Z + ".0001";
 		location = new Location(coordValid, coordValid, coordError);
+		assertEquals(expectedName, location.getName());
 	}
 	
-	// exceptional case: non-numeric (NaN) coordinate values
+	// case: non-numeric (NaN) coordinate values
 	@Test
 	public void locationNameShowsErrorIfCoordinateValueIsNonNumeric() {
+		expectedName = Location.ERROR_NAME;
 		coordValid = "0";
 		coordError = "";
+
 		location = new Location(coordValid, coordValid, coordError);
-		assertTrue(location.getName().equals(Location.ERROR_NAME));
+		assertEquals(expectedName, location.getName());
+		location = new Location(coordValid, coordError, coordValid);
+		assertEquals(expectedName, location.getName());
+		location = new Location(coordError, coordValid, coordValid);
+		assertEquals(expectedName, location.getName());
 	}
 
 }
