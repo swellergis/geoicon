@@ -1,5 +1,8 @@
 package com.swellergis.geoicon.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class defining an unprojected (geographic) 3D location object.
  * 
@@ -22,6 +25,7 @@ public class Location {
 	protected static final String ERROR_NAME = "location_error";
 	// name given to locations created through default constructor (no parameters)
 	protected static final String DEFAULT_NAME = "location_default";
+	private static final Logger logger = LoggerFactory.getLogger(Location.class);
 
 	private double x; // longitude
 	private double y; // latitude
@@ -37,9 +41,10 @@ public class Location {
 	 * @param y - latitude
 	 * @param z - elevation
 	 */
-	public Location(String x, String y, String z) {
+	public Location(String sx, String sy, String sz) {
 		name = DEFAULT_NAME;
-		parseCoordinateInput(x, y, z);
+		parseCoordinateInput(sx, sy, sz);
+		logger.debug("[Location created] : {}", String.format("%s, %s, %s, %s", x, y, z, name));
 	}
 
 	/**
@@ -51,12 +56,12 @@ public class Location {
 	 */
 	private void parseCoordinateInput(String sx, String sy, String sz) {		
 		try {
-			x = Math.abs(Double.parseDouble(sx));
-			y = Math.abs(Double.parseDouble(sy));
+			x = Double.parseDouble(sx);
+			y = Double.parseDouble(sy);
 			z = Double.parseDouble(sz);
 		} catch(NumberFormatException e) {
-			// TODO implement logging
 			String errorMsg = String.format("Parameters for input coordinates must be numeric. Input values: %s, %s, %s", sx, sy, sz);
+			logger.debug("[Location error] : {}", errorMsg);
 			defineWithDefaultCoordinates(ERROR_NAME);
 		}
 		verifyCoordinateInput(x, y, z);
@@ -86,11 +91,11 @@ public class Location {
 		StringBuilder errorMsg = new StringBuilder("");
 
 		// verify input for longitude is within the defined threshold range
-		if (dx > THRESHOLD_MAX_X) {
+		if (Math.abs(dx) > THRESHOLD_MAX_X) {
 			errorMsg.append("Longitude (x) cannot be < " + THRESHOLD_MIN_X + " or > " + THRESHOLD_MAX_X + ". Input value: " + dx);
 		}
 		// verify input for latitude is within the defined threshold range
-		if (dy > THRESHOLD_MAX_Y) {
+		if (Math.abs(dy) > THRESHOLD_MAX_Y) {
 			errorMsg.append("Latitude (y) cannot be < " + THRESHOLD_MIN_Y + " or > " + THRESHOLD_MAX_Y + ". Input value: " + dy);
 		}
 		// verify input for elevation is below the defined minimum threshold
@@ -100,6 +105,7 @@ public class Location {
 
 		// log an error if there seems to be a problem and define location with default coordinates
 		if (!errorMsg.toString().isEmpty()) {
+			logger.debug("[Location error] : {}", errorMsg);
 			defineWithDefaultCoordinates(ERROR_NAME);
 		}
 	}
