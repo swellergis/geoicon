@@ -3,6 +3,7 @@ package com.swellergis.geoicon.domain;
 import static junit.framework.Assert.*;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -72,6 +73,15 @@ public class LocationTest {
 		coordValid = "0";
 		coordError = Location.THRESHOLD_MIN_Z + ".0001";
 		location = new Location(coordValid, coordValid, coordError);
+	}
+	
+	// exceptional case: non-numeric (NaN) coordinate values
+	@Test
+	public void locationNameShowsErrorIfCoordinateValueIsNonNumeric() {
+		coordValid = "0";
+		coordError = "";
+		location = new Location(coordValid, coordValid, coordError);
+		assertTrue(location.getName().equals(Location.ERROR_NAME));
 	}
 
 }
