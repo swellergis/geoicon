@@ -21,10 +21,11 @@ public class IndexController {
 	 * @param model
 	 * @return
 	 */
- 	@RequestMapping(value = "/")
+ 	@RequestMapping(value = "/index.htm")
 	public String getIndexDefault(ModelMap model) {
 		logger.debug("[getIndexDefault]");
- 		model.addAttribute("message", "Index");
+ 		//model.addAttribute("message", "Index");
+ 		model.addAttribute("message", "");
 		return VIEW_INDEX;
 	}
 

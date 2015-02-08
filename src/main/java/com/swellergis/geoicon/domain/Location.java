@@ -116,23 +116,76 @@ public class Location {
 	public double getX() {
 		return x;
 	}
+	
 	/**
 	 * @return the latitude y
 	 */
 	public double getY() {
 		return y;
 	}
+	
 	/**
 	 * @return the elevation z
 	 */
 	public double getZ() {
 		return z;
 	}
+	
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * since we're overriding equals(), we need to override hashCode() as well. if two
+	 * objects are equal, they must have matching hash codes.
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(z);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+	/**
+	 * override equals() so two location objects can be logically compared based
+	 * on their associated coordinate values instead of whether or not they're
+	 * simply the same object.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Location other = (Location) obj;
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+			return false;
+		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+			return false;
+		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
+			return false;
+		return true;
+	}
+	
+	/**
+	 * override toString() to reflect what the user really wants to see.
+	 */
+	@Override
+	public String toString() {
+		String locationName = (name != null ? name : ERROR_NAME);
+		return String.format(
+				"[Location: %s, %s, %s, %s]", locationName, x, y, z);
 	}
 
 }
